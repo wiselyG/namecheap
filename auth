@@ -23,8 +23,7 @@ def main():
 	challengeTag = bs(f'<host name="_acme-challenge" type="TXT" address="{challenge}" ttl="60"', 'lxml').body.next
 	print(f"domain:{domain},challenge:{challenge}")
 	print(f"challengeTag:[{challengeTag}]")
-	print("hosts type: %s"%str(type(hosts)))
-	printlog(hosts)
+	print(hosts)
 	hosts.append(challengeTag)
 	setHostRecords(domain,hosts)
 	time.sleep(30)
