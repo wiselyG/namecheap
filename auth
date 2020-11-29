@@ -26,13 +26,17 @@ def main():
 	setHostRecords(domain,hosts)
 	time.sleep(30)
 
+def ouput(hosts):
+	for host in hosts:
+		print(host)
+
 def clean():
 	domain = os.getenv('CERTBOT_DOMAIN')
 	hosts = getHostRecords(domain)
 	print(type(hosts))
-	print(hosts.prettify())
+	output(hosts)
 	hosts.find(name="_acme-challenge").decompose()
-	print(hosts.prettify())
+	output(hosts)
 	return False
 
 def methodURL(cmd_name, *args, **kwargs):
