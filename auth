@@ -30,9 +30,10 @@ def clean():
 	domain = os.getenv('CERTBOT_DOMAIN')
 	hosts = getHostRecords(domain)
 	print(type(hosts))
-	for host in hosts:
-		if(host['name']=='_acme-challenge'):
-			host.remove(host)
+	print(hosts.prettify())
+	hosts.find(name="_acme-challenge").decompose()
+	print(hosts.prettify())
+	return False
 
 def methodURL(cmd_name, *args, **kwargs):
 	"""
@@ -98,4 +99,5 @@ def setHostRecords(domain,records):
 		print("Records successfully updated.")
 
 if __name__ == "__main__":
-	main()
+	# main()
+	clean()
