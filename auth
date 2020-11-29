@@ -28,14 +28,12 @@ def main():
 
 def printlog(hosts):
 	for host in hosts:
-		print(host)
+		print(host.attrs)
 
 def clean():
 	domain = os.getenv('CERTBOT_DOMAIN')
-	hosts = getHostRecords(domain)
-	print(type(hosts))
-	printlog(hosts)
-	hosts.find(name="_acme-challenge").decompose()
+	hosts = getHostRecords(domain,True)
+	print(len(hosts))
 	printlog(hosts)
 	return False
 
@@ -64,7 +62,7 @@ def getDomainList():
 	domains = soup.find_all('domain')
 	return domains
 
-def getHostRecords(domain):
+def getHostRecords(domain,clean=False):
 	"""
 	Return list of <Host> elements.
 	Does not yet support mutlipart TLDs.
@@ -74,6 +72,8 @@ def getHostRecords(domain):
 	url = url + f"&SLD={SLD}&TLD={TLD}"
 	result = requests.get(url).text
 	soup = bs(result, 'lxml')
+	if clean:
+		soup.find("host",name="_acme-challenge").decompose()
 	hosts = soup.find_all('host')
 	return hosts
 
