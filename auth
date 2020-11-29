@@ -1,18 +1,20 @@
-#!/bin/python
+#!/usr/bin/python3
+
 
 import requests
 from bs4 import BeautifulSoup as bs
 #import requests_cache
 import os
 import time
+import sys
 
 #requests_cache.install_cache('namecheap_cache')
 SANDBOX=False
 
-api_username = "username"
-api_key = "put your namecheap api key here"
-client_ip = "0.0.0.0"
-nc_username = "username"
+api_username = "wiselyCheap"
+api_key = "934c64e70518487bba5f4581b36cb212"
+client_ip = "74.120.174.15"
+nc_username = "wiselyCheap"
 
 def main(): 
 	domain = os.getenv('CERTBOT_DOMAIN')
@@ -36,7 +38,8 @@ def clean():
 	hosts = getHostRecords(domain,True)
 	print(len(hosts))
 	printlog(hosts)
-	return False
+	setHostRecords(domain,hosts)
+	time.sleep(30)
 
 def methodURL(cmd_name, *args, **kwargs):
 	"""
@@ -107,5 +110,12 @@ def setHostRecords(domain,records):
 		print("Records successfully updated.")
 
 if __name__ == "__main__":
-	main()
-	# clean()
+	option="add"
+	if len(sys.argv)>1:
+		option=sys.argv[1]
+	else:
+		option="add"
+	if option=="add":
+		main()
+	else:
+		clean()
