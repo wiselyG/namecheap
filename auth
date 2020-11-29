@@ -73,7 +73,10 @@ def getHostRecords(domain,clean=False):
 	result = requests.get(url).text
 	soup = bs(result, 'lxml')
 	if clean:
-		soup.find("host",name="_acme-challenge").decompose()
+		item=soup.find("host",name="_acme-challenge")
+		print(item)
+		if item:
+			item.decompose()
 	hosts = soup.find_all('host')
 	return hosts
 
