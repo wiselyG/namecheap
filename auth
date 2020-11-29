@@ -22,13 +22,14 @@ def main():
 	print(f"domain:{domain},challenge:{challenge}")
 	print(f"challengeTag:[{challengeTag}]")
 	print("hosts type: %s"%str(type(hosts)))
+	printlog(hosts)
 	hosts.append(challengeTag)
 	setHostRecords(domain,hosts)
 	time.sleep(30)
 
 def printlog(hosts):
 	for host in hosts:
-		print(host.attrs)
+		print(host)
 
 def clean():
 	domain = os.getenv('CERTBOT_DOMAIN')
@@ -106,5 +107,5 @@ def setHostRecords(domain,records):
 		print("Records successfully updated.")
 
 if __name__ == "__main__":
-	# main()
-	clean()
+	main()
+	# clean()
