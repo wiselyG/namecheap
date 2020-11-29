@@ -19,9 +19,20 @@ def main():
 	hosts = getHostRecords(domain)
 	challenge = os.getenv('CERTBOT_VALIDATION')
 	challengeTag = bs(f'<host name="_acme-challenge" type="TXT" address="{challenge}" ttl="60"', 'lxml').body.next
+	print(f"domain:{domain},challenge:{challenge}")
+	print(f"challengeTag:[{challengeTag}]")
+	print("hosts type:"+type(hosts))
 	hosts.append(challengeTag)
 	setHostRecords(domain,hosts)
 	time.sleep(30)
+
+def clean():
+	domain = os.getenv('CERTBOT_DOMAIN')
+	hosts = getHostRecords(domain)
+	print(type(hosts))
+	for host in hosts:
+		if(host['name']=='_acme-challenge'):
+			host.remove(host)
 
 def methodURL(cmd_name, *args, **kwargs):
 	"""
